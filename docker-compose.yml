@@ -13,9 +13,10 @@ services:
       ASPNETCORE_ENVIRONMENT: Production
       ASPNETCORE_URLS: http://*:5100
       Logging__LogLevel__Default: Debug
-      Logging__LogLevel__Microsoft.AspNetCore: Debug
       SearchProviders__ProviderOne__BaseUrl: http://mixvel-provider-one:5101
+      SearchProviders__ProviderOne__RetryCount: 2
       SearchProviders__ProviderTwo__BaseUrl: http://mixvel-provider-two:5102
+      SearchProviders__ProviderTwo__RetryCount: 3
 #      Any | All
       Search__AvailabilityStrategy: All
 #      Cache__InMemory__MaxRdSecond: 120

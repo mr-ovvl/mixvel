@@ -1,6 +1,5 @@
 using System.Net.Http.Json;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using MixVel.Contracts;
 using MixVel.Integrations.ProviderTwo.Contracts;
 
@@ -11,14 +10,10 @@ public class ProviderTwoClient : IProviderClient
     private readonly ILogger<ProviderTwoClient> _logger;
     private readonly HttpClient _httpClient;
 
-    public ProviderTwoClient(
-        ILogger<ProviderTwoClient> logger,
-        IOptions<ProviderTwoConfig> config,
-        HttpClient httpClient)
+    public ProviderTwoClient(ILogger<ProviderTwoClient> logger, HttpClient httpClient)
     {
         _logger = logger;
         _httpClient = httpClient;
-        _httpClient.BaseAddress = new Uri(config.Value.BaseUrl);
     }
 
     public string Name => "ProviderTwo";

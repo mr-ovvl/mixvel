@@ -1,6 +1,5 @@
 using System.Net.Http.Json;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using MixVel.Contracts;
 using MixVel.Integrations.ProviderOne.Contracts;
 
@@ -11,14 +10,10 @@ public class ProviderOneClient : IProviderClient
     private readonly ILogger<ProviderOneClient> _logger;
     private readonly HttpClient _httpClient;
 
-    public ProviderOneClient(
-        ILogger<ProviderOneClient> logger,
-        IOptions<ProviderOneConfig> config,
-        HttpClient httpClient)
+    public ProviderOneClient(ILogger<ProviderOneClient> logger, HttpClient httpClient)
     {
         _logger = logger;
         _httpClient = httpClient;
-        _httpClient.BaseAddress = new Uri(config.Value.BaseUrl);
     }
 
     public string Name => "ProviderOne";
