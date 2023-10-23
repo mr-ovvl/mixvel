@@ -1,0 +1,53 @@
+services:
+  mixvel-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+     - "5100:5100"
+    depends_on: 
+      - mixvel-provider-one
+      - mixvel-provider-two
+      - mixvel-redis
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://*:5100
+      Logging__LogLevel__Default: Debug
+      Logging__LogLevel__Microsoft.AspNetCore: Debug
+      SearchProviders__ProviderOne__BaseUrl: http://mixvel-provider-one:5101
+      SearchProviders__ProviderTwo__BaseUrl: http://mixvel-provider-two:5102
+#      Any | All
+      Search__AvailabilityStrategy: All
+#      Cache__InMemory__MaxRdSecond: 120
+      Cache__Redis__dbconfig__EndPoints__0__Host: mixvel-redis
+      Cache__Redis__dbconfig__EndPoints__0__Port: 6739
+      Cache__Redis__dbconfig__Password: redis-password
+  mixvel-provider-one:
+    build:
+      context: .
+      dockerfile: Dockerfile.ProviderOne
+    ports:
+      - "5101:5101"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://*:5101
+  mixvel-provider-two:
+    build:
+      context: .
+      dockerfile: Dockerfile.ProviderTwo
+    ports:
+      - "5102:5102"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://*:5102
+  mixvel-redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --save 20 1 --loglevel warning --requirepass redis-password
+    volumes:
+      - cache:/data
+volumes:
+  cache:
+    driver: local

@@ -1,0 +1,18 @@
+﻿FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+WORKDIR /app
+EXPOSE 5101
+
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+COPY src /src
+WORKDIR /src
+RUN dotnet restore "MixVel.ProviderOne.Api/MixVel.ProviderOne.Api.csproj"
+WORKDIR "/src/MixVel.ProviderOne.Api"
+RUN dotnet build "MixVel.ProviderOne.Api.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "MixVel.ProviderOne.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "MixVel.ProviderOne.Api.dll"]

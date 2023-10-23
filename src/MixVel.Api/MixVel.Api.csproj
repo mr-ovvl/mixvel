@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MixVel.AppServices\MixVel.AppServices.csproj" />
+      <ProjectReference Include="..\MixVel.Contracts\MixVel.Contracts.csproj" />
+      <ProjectReference Include="..\MixVel.Integrations.ProviderOne.Contracts\MixVel.Integrations.ProviderOne.Contracts.csproj" />
+      <ProjectReference Include="..\MixVel.Integrations.ProviderOne\MixVel.Integrations.ProviderOne.csproj" />
+      <ProjectReference Include="..\MixVel.Integrations.ProviderTwo.Contracts\MixVel.Integrations.ProviderTwo.Contracts.csproj" />
+      <ProjectReference Include="..\MixVel.Integrations.ProviderTwo\MixVel.Integrations.ProviderTwo.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="EasyCaching.InMemory" Version="1.9.1" />
+      <PackageReference Include="EasyCaching.Redis" Version="1.9.1" />
+      <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.12" />
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    </ItemGroup>
+
+</Project>
